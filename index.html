@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Dhuha Habibullah | Marine Scientist - Data Analyst - IoT Enthusiast</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/ogw/AF2bZyjjdFlUD8SRX1gVnZDm1QwbseKeKuZQ9E7WCAIkWSFQxMfB=s64-c-mo" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Custom Properties for theming */
+        :root {
+            --dark-bg: #0A0F1A;
+            --slate-light: #e2e8f0;
+            --slate-mid: #94a3b8;
+            --slate-dark: #334155;
+            --sky-accent: #38bdf8;
+            --glass-bg: rgba(15, 23, 42, 0.65); /* Slightly increased opacity for readability */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--slate-light);
+        }
+        /* Fixed canvas background */
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        /* Glassmorphism card style with enhanced blur */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        /* Decorative underline for section titles */
+        .section-title-underline::after {
+            content: ''; position: absolute; bottom: -12px; left: 50%;
+            transform: translateX(-50%); width: 60px; height: 3px;
+            background-color: var(--sky-accent);
+            border-radius: 2px;
+        }
+        /* Prose styles for formatting rich text content from a CMS */
+        .prose { --tw-prose-body: #d1d5db; --tw-prose-headings: #fff; --tw-prose-links: #fff; --tw-prose-bold: #fff; --tw-prose-bullets: #6b7280; --tw-prose-hr: #4b5563; --tw-prose-quotes: #f3f4f6; --tw-prose-quote-borders: var(--sky-accent); }
+        
+        /* Timeline styles for experience section */
+        .timeline-item::before {
+            content: ''; position: absolute; left: -0.3125rem; /* Adjusted for centering on the line */
+            top: 0.5rem; width: 1rem; height: 1rem;
+            border-radius: 50%; background-color: var(--sky-accent); border: 3px solid var(--dark-bg); z-index: 1;
+        }
+        /* Loading spinner animation */
+        .loader {
+            width: 2rem; height: 2rem;
+            border: 3px solid var(--slate-dark);
+            border-bottom-color: var(--sky-accent);
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="relative z-10">
+        <!-- Header and Navigation -->
+        <header class="bg-slate-900/50 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-slate-800">
+            <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+                <button id="nav-home" class="text-xl font-bold text-white hover:text-sky-400 transition-colors">ADH</button>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#experience" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Experience</a>
+                    <a href="#education" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Education</a>
+                    <a href="#projects" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Projects</a>
+                    <a href="#skills" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Skills</a>
+                </div>
+                <a id="cv-download-link-desktop" href="#" class="hidden md:block bg-sky-500 text-white px-5 py-2 rounded-full font-semibold text-sm hover:bg-sky-600 transition-all duration-300 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40">
+                    Download CV
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-slate-300 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </nav>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-slate-900/80 backdrop-blur-lg border-b border-slate-800">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#experience" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Experience</a>
+                    <a href="#education" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Education</a>
+                    <a href="#projects" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Projects</a>
+                    <a href="#skills" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Skills</a>
+                    <a id="cv-download-link-mobile" href="#" class="block w-full text-left mt-2 bg-sky-500 text-white px-4 py-2 rounded-md font-semibold text-sm hover:bg-sky-600 transition-all">
+                        Download CV
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <!-- Loading State -->
+            <div id="loading-state" class="min-h-screen flex justify-center items-center">
+                <div class="loader"></div>
+            </div>
+
+            <!-- HomePage Content -->
+            <div id="home-page" class="hidden">
+                <!-- Hero Section -->
+                <section id="hero" class="text-center py-20 md:py-24 pt-32 sm:pt-40">
+                    <div class="container mx-auto px-6">
+                        <img src="https://oygwmoiapzllryxeumoj.supabase.co/storage/v1/object/public/portfolio-assets/Ahmad%20Dhuha%20Habibullah.png" alt="Ahmad Dhuha Habibullah" class="w-32 h-32 rounded-full mx-auto mb-6 shadow-xl border-4 border-slate-800 bg-slate-700">
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">Ahmad Dhuha Habibullah</h1>
+                        <p class="mt-3 text-xl md:text-2xl text-sky-400 font-medium">Marine Scientist & Data Analyst</p>
+                        <p class="mt-6 max-w-3xl mx-auto text-slate-300">
+                           Marine scientist and data analyst with over 5 years of experience in ocean-atmosphere interactions, marine heatwave analysis, and environmental monitoring. Proficient in MATLAB, Python, R, and Arduino, I excel in processing large datasets and developing IoT-based solutions.
+                        </p>
+                    </div>
+                </section>
+                
+                <!-- Experience Section -->
+                <section id="experience" class="py-16 md:py-20 scroll-mt-20">
+                    <div class="container mx-auto px-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Professional Experience</h2>
+                        <div class="max-w-3xl mx-auto relative border-l-2 border-slate-800/50 pl-8">
+                            <div class="space-y-12">
+                                <div class="timeline-item"><h3 class="text-xl font-bold text-white">Marine-Meteorological Specialist</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (Mid 2024 - Present)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Install and maintain marine meteorological systems.</li><li>Produce daily marine weather forecasts for clients, utilizing radar data.</li><li>Monitor real-time environmental data, enhancing weather models.</li></ul></div>
+                                <div class="timeline-item"><h3 class="text-xl font-bold text-white">Project Management Officer</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (Mid 2023 - Mid 2024)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Optimized project schedules for Marine Automatic Weather Station deployments.</li><li>Coordinated installation processes, facilitating seamless collaboration.</li></ul></div>
+                                <div class="timeline-item"><h3 class="text-xl font-bold text-white">System Integration Officer</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (2022 - Mid 2023)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Conducted site surveys to determine optimal locations for AWS installations.</li><li>Collaborated with clients on site selection and coordinated with suppliers.</li></ul></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Education Section -->
+                <section id="education" class="py-16 md:py-20 scroll-mt-20">
+                    <div class="container mx-auto px-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Education</h2>
+                        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                            <div class="glass-card rounded-xl p-6 hover:shadow-lg hover:shadow-sky-500/10"><h3 class="text-xl font-bold text-white">Master of Science in Earth Science</h3><p class="font-medium text-slate-300 mt-1">Institut Teknologi Bandung (2020 - 2022)</p><p class="mt-3 text-slate-300 text-sm">Thesis: "Analyzing Marine Heatwaves in Indonesia (1982-2020)"</p></div>
+                            <div class="glass-card rounded-xl p-6 hover:shadow-lg hover:shadow-sky-500/10"><h3 class="text-xl font-bold text-white">Bachelor of Science in Physics</h3><p class="font-medium text-slate-300 mt-1">Universitas Bengkulu (2015 - 2019)</p><p class="mt-3 text-slate-300 text-sm">Thesis: "Development of a Microcontroller-Based Solar Irradiance Monitoring Instrument"</p></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects Section -->
+                <section id="projects" class="py-16 md:py-20 scroll-mt-20">
+                    <div class="container mx-auto px-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Projects & Publications</h2>
+                        <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                            <!-- Projects from Supabase will be injected here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Training Section -->
+                <section id="training" class="py-16 md:py-20 scroll-mt-20">
+                    <div class="container mx-auto px-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Professional Training</h2>
+                        <div id="training-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                             <!-- Training from Supabase will be injected here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section id="skills" class="py-16 md:py-20 scroll-mt-20">
+                    <div class="container mx-auto px-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Core Competencies</h2>
+                        <div id="skills-container" class="max-w-4xl mx-auto">
+                            <!-- Skills from Supabase will be injected here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- PostPage Content -->
+            <div id="post-page" class="hidden">
+                <section class="py-32">
+                    <div class="container mx-auto px-6 max-w-4xl">
+                        <button id="back-to-home-btn" class="text-sky-400 mb-8 inline-flex items-center group">
+                            <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                            Back to Overview
+                        </button>
+                        <div id="post-content-container" class="glass-card rounded-xl p-8 md:p-12"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="bg-slate-900/50 border-t border-slate-800 mt-12">
+            <div class="container mx-auto px-6 py-12 text-center">
+                <h2 class="text-3xl font-bold text-white">Get In Touch</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-slate-300">I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious vision. Feel free to reach out.</p>
+                <div class="mt-8">
+                     <a href="mailto:Habibullahphys15@gmail.com" class="bg-sky-500 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-sky-600 transition-all duration-300 shadow-lg">
+                        Contact Me
+                    </a>
+                </div>
+                <p class="mt-10 text-sm text-slate-400">&copy; 2025 Ahmad Dhuha Habibullah. Powered by Curiosity.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // --- CONFIGURATION ---
+            const SUPABASE_URL = 'https://oygwmoiapzllryxeumoj.supabase.co'; 
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Z3dtb2lhcHpsbHJ5eGV1bW9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ3NTYzNjQsImV4cCI6MjA3MDMzMjM2NH0.p6C3jSzXg3889QfyGFFrdhUn0TLIfJmWevOg5k_2ZZ8';
+
+            // --- GLOBAL STATE ---
+            let posts = [];
+            let chartInstance = null;
+            let supabaseClient = null;
+
+            // --- DOM ELEMENTS ---
+            const loadingState = document.getElementById('loading-state');
+            const pages = { home: document.getElementById('home-page'), post: document.getElementById('post-page') };
+            const projectsGrid = document.getElementById('projects-grid');
+            const trainingGrid = document.getElementById('training-grid');
+            const skillsContainer = document.getElementById('skills-container');
+            const postContentContainer = document.getElementById('post-content-container');
+            const cvDownloadLinkDesktop = document.getElementById('cv-download-link-desktop');
+            const cvDownloadLinkMobile = document.getElementById('cv-download-link-mobile');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const navLinks = { 
+                home: document.getElementById('nav-home'), 
+                experience: document.querySelector('a[href="#experience"]'), 
+                education: document.querySelector('a[href="#education"]'), 
+                projects: document.querySelector('a[href="#projects"]'), 
+                skills: document.querySelector('a[href="#skills"]'), 
+                backToHome: document.getElementById('back-to-home-btn') 
+            };
+            
+            // --- MOBILE MENU TOGGLE ---
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // --- API & DATA HANDLING ---
+            function initializeSupabase() {
+                if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+                    document.getElementById('main-content').innerHTML = `<div class="min-h-screen flex flex-col justify-center items-center text-center"><h2 class="text-2xl text-yellow-500 font-bold">Ooppss</h2><p class="text-slate-300 mt-2">Please paste your Supabase URL and Anon Key into the script variables.</p></div>`;
+                    return null;
+                }
+                return supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+
+            async function fetchData(tableName, query = '*') {
+                if (!supabaseClient) return [];
+                try {
+                    const { data, error } = await supabaseClient.from(tableName).select(query);
+                    if (error) throw error;
+                    return data;
+                } catch (error) {
+                    console.error(`Failed to fetch from ${tableName}:`, error);
+                    return [];
+                }
+            }
+            
+             function getCVUrl() {
+                if (!supabaseClient) return '#';
+                const { data } = supabaseClient
+                    .storage
+                    .from('portfolio-assets')
+                    .getPublicUrl('CV_Ahmad_Dhuha_Habibullah_2025.pdf');
+                return data.publicUrl;
+            }
+
+            // --- NAVIGATION ---
+            function showPage(pageName) {
+                if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+                Object.values(pages).forEach(page => page.classList.add('hidden'));
+                if (pages[pageName]) pages[pageName].classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+
+            function showPost(postId) {
+                const post = posts.find(p => p.id == postId);
+                if (!post) { return; }
+                
+                postContentContainer.innerHTML = `<p class="text-md text-sky-400 font-medium mb-2">${post.category || 'Project'}</p><h1 class="text-4xl md:text-5xl font-bold text-white">${post.title || 'Untitled Post'}</h1><p class="text-lg text-slate-300 mt-2">${post.subtitle || ''}</p><img src="${post.imageUrl}" alt="${post.title || 'Untitled'}" class="my-8 rounded-lg w-full object-cover" onerror="this.style.display='none'"><div class="prose prose-invert prose-lg max-w-none text-slate-300">${post.content}</div>`;
+                showPage('post');
+
+                if (post.id == 1) { 
+                    setTimeout(renderCoralChart, 0);
+                }
+            }
+
+            // --- EVENT LISTENERS ---
+            navLinks.home.addEventListener('click', () => showPage('home'));
+            navLinks.backToHome.addEventListener('click', () => showPage('home'));
+            ['experience', 'education', 'projects', 'skills'].forEach(id => {
+                document.querySelectorAll(`a[href="#${id}"]`).forEach(link => {
+                     link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('home');
+                        setTimeout(() => { 
+                            const element = document.getElementById(id);
+                            if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }, 100);
+                    });
+                });
+            });
+            
+            // --- DYNAMIC CONTENT POPULATION ---
+            function populateProjects(postsData) {
+                projectsGrid.innerHTML = '';
+                postsData.forEach(post => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-card rounded-xl p-6 cursor-pointer hover:-translate-y-1 transition-transform hover:shadow-lg hover:shadow-sky-500/10 min-h-[200px] flex flex-col';
+                    card.innerHTML = `<div class="flex-grow"><h3 class="font-bold text-white text-lg">${post.title || 'Untitled Post'}</h3><p class="text-sm text-sky-400 mt-1">${post.subtitle || ''}</p><p class="mt-3 text-slate-300 text-sm">${post.summary || ''}</p></div><div class="mt-4 text-right text-xs text-sky-400/80">Read More &rarr;</div>`;
+                    card.addEventListener('click', () => showPost(post.id));
+                    projectsGrid.appendChild(card);
+                });
+            }
+
+            function populateTrainings(trainings) {
+                trainingGrid.innerHTML = '';
+                trainings.forEach(training => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-card rounded-xl p-6 text-center hover:shadow-lg hover:shadow-sky-500/10 min-h-[200px]';
+                    card.innerHTML = `<h3 class="font-bold text-white">${training.title}</h3><p class="text-sm text-slate-300 mt-1">${training.organization} (${training.year})</p><p class="mt-3 text-slate-300 text-sm">${training.description}</p>`;
+                    trainingGrid.appendChild(card);
+                });
+            }
+
+            function populateSkills(skills) {
+                const categories = [...new Set(skills.map(s => s.category))].sort();
+                let html = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">';
+                categories.forEach(category => {
+                    html += `<div><h3 class="text-lg font-bold text-sky-400 mb-3">${category}</h3><div class="flex flex-wrap gap-2">`;
+                    skills.filter(s => s.category === category).forEach(skill => {
+                        html += `<span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">${skill.name}</span>`;
+                    });
+                    html += `</div></div>`;
+                });
+                html += '</div>';
+                skillsContainer.innerHTML = html;
+            }
+
+            // --- INITIALIZATION ---
+            async function initializeApp() {
+                supabaseClient = initializeSupabase();
+                if (!supabaseClient) return;
+
+                const [fetchedPosts, fetchedTrainings, fetchedSkills] = await Promise.all([
+                    fetchData('posts', '*, posts_tags(tags(name))'),
+                    fetchData('trainings'),
+                    fetchData('skills')
+                ]);
+                
+                posts = fetchedPosts.map(post => ({
+                    ...post,
+                    tags: post.posts_tags.map(pt => pt.tags.name)
+                }));
+                
+                const cvUrl = getCVUrl();
+                cvDownloadLinkDesktop.href = cvUrl;
+                cvDownloadLinkMobile.href = cvUrl;
+
+                loadingState.classList.add('hidden'); 
+                
+                populateProjects(posts);
+                populateTrainings(fetchedTrainings);
+                populateSkills(fetchedSkills);
+
+                showPage('home');
+            }
+
+            initializeApp();
+        });
+
+        // --- Three.js Starry Night Background ---
+        let scene, camera, renderer;
+        let starGroups = [];
+        let mouseX = 0, mouseY = 0;
+
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 1;
+
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bg-canvas"), alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Create multiple groups of stars for a parallax effect
+            const starParams = [
+                { count: 2000, color: 0x555555, size: 0.5, z: -1000 }, // Farthest
+                { count: 1500, color: 0x888888, size: 0.7, z: -500 }, // Mid
+                { count: 1000, color: 0xffffff, size: 0.8, z: -100 }  // Nearest
+            ];
+
+            starParams.forEach(params => {
+                const geometry = new THREE.BufferGeometry();
+                const vertices = [];
+                for (let i = 0; i < params.count; i++) {
+                    const x = (Math.random() - 0.5) * 2000;
+                    const y = (Math.random() - 0.5) * 2000;
+                    const z = (Math.random() - 0.5) * 2000;
+                    vertices.push(x, y, z);
+                }
+                geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+                const material = new THREE.PointsMaterial({
+                    color: params.color,
+                    size: params.size,
+                    sizeAttenuation: true,
+                    transparent: true,
+                    opacity: 0.8
+                });
+
+                const stars = new THREE.Points(geometry, material);
+                stars.position.z = params.z;
+                starGroups.push(stars);
+                scene.add(stars);
+            });
+
+            // Event Listeners
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = event.clientX - (window.innerWidth / 2);
+            mouseY = event.clientY - (window.innerHeight / 2);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            const time = Date.now() * 0.00005;
+
+            // Smooth camera pan based on mouse position
+            camera.position.x += (mouseX * 0.001 - camera.position.x) * 0.02;
+            camera.position.y += (-mouseY * 0.001 - camera.position.y) * 0.02;
+            camera.lookAt(scene.position);
+
+            // Animate star groups at different speeds for parallax
+            starGroups[0].rotation.y = time * 0.1; // Farthest stars move slowest
+            starGroups[1].rotation.y = time * 0.2;
+            starGroups[2].rotation.y = time * 0.3; // Nearest stars move fastest
+
+            renderer.render(scene, camera);
+        }
+
+        initThreeJS();
+        animate();
+    </script>
+</body>
+</html>
