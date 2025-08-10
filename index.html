@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmad Dhuha Habibullah | Marine Scientist - Data Analyst - IoT Enthusiast</title>
+    <title>Ahmad Dhuha Habibullah | Marine Scientist & Data Analyst</title>
     <link rel="icon" href="https://lh3.googleusercontent.com/ogw/AF2bZyjjdFlUD8SRX1gVnZDm1QwbseKeKuZQ9E7WCAIkWSFQxMfB=s64-c-mo" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -76,7 +76,9 @@
         <!-- Header and Navigation -->
         <header class="bg-slate-900/50 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-slate-800">
             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <button id="nav-home" class="text-xl font-bold text-white hover:text-sky-400 transition-colors">ADH</button>
+                <a href="#" id="nav-home" class="block cursor-pointer">
+                    <img src="https://oygwmoiapzllryxeumoj.supabase.co/storage/v1/object/public/portfolio-assets/ADH.png" alt="ADH Logo" class="h-8 w-auto hover:opacity-80 transition-opacity">
+                </a>
                 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
@@ -120,7 +122,7 @@
             <!-- HomePage Content -->
             <div id="home-page" class="hidden">
                 <!-- Hero Section -->
-                <section id="hero" class="text-center py-20 md:py-24 pt-32 sm:pt-40">
+                <section id="hero" class="text-center pt-32 sm:pt-40 pb-8 md:pb-12">
                     <div class="container mx-auto px-6">
                         <img src="https://oygwmoiapzllryxeumoj.supabase.co/storage/v1/object/public/portfolio-assets/Ahmad%20Dhuha%20Habibullah.png" alt="Ahmad Dhuha Habibullah" class="w-32 h-32 rounded-full mx-auto mb-6 shadow-xl border-4 border-slate-800 bg-slate-700">
                         <h1 class="text-4xl md:text-5xl font-bold text-white">Ahmad Dhuha Habibullah</h1>
@@ -132,7 +134,7 @@
                 </section>
                 
                 <!-- Experience Section -->
-                <section id="experience" class="py-16 md:py-20 scroll-mt-20">
+                <section id="experience" class="py-12 md:py-16 scroll-mt-20">
                     <div class="container mx-auto px-6">
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Professional Experience</h2>
                         <div class="max-w-3xl mx-auto relative border-l-2 border-slate-800/50 pl-8">
@@ -146,7 +148,7 @@
                 </section>
                 
                 <!-- Education Section -->
-                <section id="education" class="py-16 md:py-20 scroll-mt-20">
+                <section id="education" class="py-12 md:py-16 scroll-mt-20">
                     <div class="container mx-auto px-6">
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Education</h2>
                         <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -157,7 +159,7 @@
                 </section>
 
                 <!-- Projects Section -->
-                <section id="projects" class="py-16 md:py-20 scroll-mt-20">
+                <section id="projects" class="py-12 md:py-16 scroll-mt-20">
                     <div class="container mx-auto px-6">
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Projects & Publications</h2>
                         <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -167,7 +169,7 @@
                 </section>
 
                 <!-- Training Section -->
-                <section id="training" class="py-16 md:py-20 scroll-mt-20">
+                <section id="training" class="py-12 md:py-16 scroll-mt-20">
                     <div class="container mx-auto px-6">
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Professional Training</h2>
                         <div id="training-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -177,7 +179,7 @@
                 </section>
 
                 <!-- Skills Section -->
-                <section id="skills" class="py-16 md:py-20 scroll-mt-20">
+                <section id="skills" class="py-12 md:py-16 scroll-mt-20">
                     <div class="container mx-auto px-6">
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Core Competencies</h2>
                         <div id="skills-container" class="max-w-4xl mx-auto">
@@ -237,14 +239,7 @@
             const cvDownloadLinkMobile = document.getElementById('cv-download-link-mobile');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const navLinks = { 
-                home: document.getElementById('nav-home'), 
-                experience: document.querySelector('a[href="#experience"]'), 
-                education: document.querySelector('a[href="#education"]'), 
-                projects: document.querySelector('a[href="#projects"]'), 
-                skills: document.querySelector('a[href="#skills"]'), 
-                backToHome: document.getElementById('back-to-home-btn') 
-            };
+            const navHomeButton = document.getElementById('nav-home');
             
             // --- MOBILE MENU TOGGLE ---
             mobileMenuButton.addEventListener('click', () => {
@@ -309,8 +304,13 @@
             }
 
             // --- EVENT LISTENERS ---
-            navLinks.home.addEventListener('click', () => showPage('home'));
-            navLinks.backToHome.addEventListener('click', () => showPage('home'));
+            navHomeButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('home');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            document.getElementById('back-to-home-btn').addEventListener('click', () => showPage('home'));
+
             ['experience', 'education', 'projects', 'skills'].forEach(id => {
                 document.querySelectorAll(`a[href="#${id}"]`).forEach(link => {
                      link.addEventListener('click', (e) => {
@@ -350,9 +350,9 @@
 
             function populateSkills(skills) {
                 const categories = [...new Set(skills.map(s => s.category))].sort();
-                let html = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">';
+                let html = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">';
                 categories.forEach(category => {
-                    html += `<div><h3 class="text-lg font-bold text-sky-400 mb-3">${category}</h3><div class="flex flex-wrap gap-2">`;
+                    html += `<div class="text-center"><h3 class="text-lg font-bold text-sky-400 mb-3">${category}</h3><div class="flex flex-wrap gap-2 justify-center">`;
                     skills.filter(s => s.category === category).forEach(skill => {
                         html += `<span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">${skill.name}</span>`;
                     });
