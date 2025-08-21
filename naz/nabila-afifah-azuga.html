@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nabila Afifah Azuga | Marine Scientist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFF5F2; /* Soft peach white */
+            color: #5C4033; /* Dark brown for text */
+        }
+        #three-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .content-section {
+            position: relative;
+            z-index: 1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .accent-color {
+            color: #FF6B6B; /* A soft pink/coral */
+        }
+        .bg-accent {
+            background-color: #FF6B6B;
+        }
+        .border-accent {
+            border-color: #FF6B6B;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF5F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFDAB9; /* Lighter peach */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B6B;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Three.js Canvas Background -->
+    <div id="three-canvas"></div>
+
+    <!-- Main Content -->
+    <div class="relative min-h-screen">
+
+        <!-- Header -->
+        <header class="content-section fixed top-0 left-0 right-0 z-20 transition-all duration-300" id="header">
+            <div class="container mx-auto px-6 py-4">
+                <nav class="flex items-center justify-between">
+                    <a href="#" class="text-2xl font-bold text-gray-800">NAA</a>
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#about" class="text-gray-700 hover:text-pink-500 transition">About</a>
+                        <a href="#experience" class="text-gray-700 hover:text-pink-500 transition">Experience</a>
+                        <a href="#skills" class="text-gray-700 hover:text-pink-500 transition">Skills</a>
+                        <a href="#publications" class="text-gray-700 hover:text-pink-500 transition">Publications</a>
+                        <a href="#contact" class="bg-pink-400 text-white px-4 py-2 rounded-full hover:bg-pink-500 transition">Contact</a>
+                    </div>
+                     <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </nav>
+                 <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden mt-4">
+                    <a href="#about" class="block py-2 text-gray-700 hover:text-pink-500">About</a>
+                    <a href="#experience" class="block py-2 text-gray-700 hover:text-pink-500">Experience</a>
+                    <a href="#skills" class="block py-2 text-gray-700 hover:text-pink-500">Skills</a>
+                    <a href="#publications" class="block py-2 text-gray-700 hover:text-pink-500">Publications</a>
+                    <a href="#contact" class="block mt-2 bg-pink-400 text-white px-4 py-2 rounded-full hover:bg-pink-500 text-center">Contact</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="content-section h-screen flex items-center justify-center text-center">
+            <div class="max-w-3xl mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight mb-4">Nabila Afifah Azuga</h1>
+                <p class="text-lg md:text-2xl text-pink-500 font-medium">Lecturer & Researcher in Physical Oceanography</p>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto">
+                    Connecting ocean processes with climate variability, fisheries productivity, and coastal resilience through data-driven research and transparent monitoring.
+                </p>
+            </div>
+        </section>
+
+        <div class="bg-white/80 backdrop-blur-lg rounded-t-3xl content-section">
+            <div class="container mx-auto px-6 py-16 md:py-24 space-y-24">
+
+                <!-- About Section -->
+                <section id="about">
+                    <div class="grid md:grid-cols-5 gap-12 items-center">
+                        <div class="md:col-span-2">
+                             <div class="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-full overflow-hidden shadow-2xl ring-4 ring-pink-200 ring-offset-4 ring-offset-white">
+                                <img src="https://placehold.co/300x300/FFE4E1/5C4033?text=Nabila+A.A" alt="Nabila Afifah Azuga" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="md:col-span-3 text-center md:text-left">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">About Me</h2>
+                            <p class="text-gray-600 leading-relaxed">
+                                I am a Lecturer in Marine Sciences at the University of Riau, specializing in physical oceanography. My work focuses on air-sea interactions, sea level variability, and climate-driven ocean changes. I am passionate about linking oceanographic research to practical applications in fisheries productivity and coastal resilience. My commitment is to foster transparent ocean monitoring and sustainable marine resource management, contributing to effective ocean-climate mitigation strategies.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Experience Section -->
+                <section id="experience">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Professional Experience</h2>
+                    <div class="max-w-4xl mx-auto">
+                        <div class="relative border-l-2 border-pink-200 pl-10 space-y-12">
+                            <!-- Timeline Item 1 -->
+                            <div class="relative">
+                                <div class="absolute -left-12 top-1 w-6 h-6 bg-pink-400 rounded-full ring-4 ring-white"></div>
+                                <h3 class="text-xl font-semibold text-gray-800">Lecturer</h3>
+                                <p class="font-medium text-pink-500">University of Riau | 2024 - Present</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Teaching undergraduate courses in physical oceanography.</li>
+                                    <li>Conducting research on sea surface variability and its influence on fisheries.</li>
+                                    <li>Guiding student research using satellite data and platforms like Global Fishing Watch.</li>
+                                </ul>
+                            </div>
+                            <!-- Timeline Item 2 -->
+                            <div class="relative">
+                                <div class="absolute -left-12 top-1 w-6 h-6 bg-pink-400 rounded-full ring-4 ring-white"></div>
+                                <h3 class="text-xl font-semibold text-gray-800">Environmental Specialist</h3>
+                                <p class="font-medium text-pink-500">PT. Lagio Arsandi | 2024 - 2025</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Prepared and reviewed Environmental Impact Assessment (EIA) documents.</li>
+                                    <li>Conducted field assessments for environmental, social, and ecological impacts.</li>
+                                    <li>Collaborated with multidisciplinary teams and stakeholders.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Education Section -->
+                <section id="education">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Education</h2>
+                    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                        <div class="glass-card p-6 rounded-xl shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800">Master of Science in Earth Science</h3>
+                            <p class="font-medium text-pink-500">Bandung Institute of Technology | 2021 - 2023</p>
+                            <p class="mt-2 text-gray-600">Thesis on the characteristics of Marine Heatwaves in the subsurface layer of the South Java Sea.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-xl shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800">Bachelor of Fisheries in Marine Sciences</h3>
+                            <p class="font-medium text-pink-500">University of Riau | 2016 - 2020</p>
+                            <p class="mt-2 text-gray-600">Thesis on the influence of the Indian Ocean Dipole on sea surface temperature and rainfall in West Sumatra.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section id="skills">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Skills</h2>
+                    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <div class="space-y-2">
+                            <div class="w-20 h-20 mx-auto bg-pink-100 rounded-full flex items-center justify-center"><span class="text-3xl">📊</span></div>
+                            <p class="font-semibold text-gray-700">Data Analysis</p>
+                            <p class="text-sm text-gray-500">MATLAB, GRADS, ODV, Excel</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="w-20 h-20 mx-auto bg-pink-100 rounded-full flex items-center justify-center"><span class="text-3xl">🌍</span></div>
+                            <p class="font-semibold text-gray-700">GIS Analysis</p>
+                            <p class="text-sm text-gray-500">ArcGIS</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="w-20 h-20 mx-auto bg-pink-100 rounded-full flex items-center justify-center"><span class="text-3xl">💻</span></div>
+                            <p class="font-semibold text-gray-700">Technical Proficiency</p>
+                             <p class="text-sm text-gray-500">Programming, Site Surveys</p>
+                        </div>
+                        <div class="space-y-2">
+                             <div class="w-20 h-20 mx-auto bg-pink-100 rounded-full flex items-center justify-center"><span class="text-3xl">🗣️</span></div>
+                            <p class="font-semibold text-gray-700">Languages</p>
+                            <p class="text-sm text-gray-500">Indonesian (Native), English (Intermediate)</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Publications Section -->
+                <section id="publications">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Publications & Presentations</h2>
+                    <div class="max-w-4xl mx-auto space-y-6">
+                        <!-- Publication Item -->
+                        <div class="glass-card p-5 rounded-lg">
+                            <p class="text-gray-600">Interannual variability of sea level anomaly (SLA) in the western Sumatra coastal waters driven by ENSO and IOD modulations.</p>
+                            <p class="text-sm text-pink-500 mt-1">Asian Journal of Aquatic Sciences, 2024</p>
+                        </div>
+                         <!-- Publication Item -->
+                        <div class="glass-card p-5 rounded-lg">
+                            <p class="text-gray-600">Identification of Seasonal Water Mass Characteristics in West Sumatra Waters.</p>
+                            <p class="text-sm text-pink-500 mt-1">International Conference on Radioscience, Equatorial Atmospheric Science and Environment, 2023</p>
+                        </div>
+                        <!-- Publication Item -->
+                        <div class="glass-card p-5 rounded-lg">
+                            <p class="text-gray-600">Subsurface Marine Heatwaves of South Java Sea: Trend, Frequency, Duration, and Cumulative Intensity...</p>
+                            <p class="text-sm text-pink-500 mt-1">Jurnal Perikanan dan Kelautan UNRI, 2022</p>
+                        </div>
+                        <div class="text-center mt-8">
+                            <a href="#" class="text-pink-500 font-semibold hover:underline">View All Publications</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Section -->
+                <section id="contact">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Get In Touch</h2>
+                        <p class="text-gray-600 mb-8">I'm always open to discussing new research, collaborations, or opportunities. Feel free to reach out.</p>
+                        <a href="mailto:Nabila.afifahazuga@lecturer.unri.ac.id" class="inline-block bg-pink-400 text-white text-lg font-semibold px-8 py-4 rounded-full hover:bg-pink-500 transition shadow-lg">
+                            Email Me
+                        </a>
+                        <p class="text-gray-500 mt-6 text-sm">Nabila.afifahazuga@lecturer.unri.ac.id<br>+62-851-9000-3577</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="content-section bg-gray-800 text-white py-8">
+            <div class="container mx-auto text-center">
+                <p>&copy; 2025 Nabila Afifah Azuga. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Three.js Background Animation
+        let scene, camera, renderer, particles, particleSystem;
+        let mouseX = 0, mouseY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        function initThree() {
+            // Scene setup
+            scene = new THREE.Scene();
+            
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.z = 1000;
+
+            // Particle material
+            const particleMaterial = new THREE.PointsMaterial({
+                color: 0xFFC0CB, // Soft Pink
+                size: 3,
+                map: createCircleTexture('#FFDAB9', 256), // Peach color for particles
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                depthWrite: false
+            });
+
+            // Particle geometry
+            const particleGeometry = new THREE.BufferGeometry();
+            const particleCount = 5000;
+            const positions = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 2000;
+            }
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            // Particle system
+            particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particleSystem);
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0); // Transparent background
+            document.getElementById('three-canvas').appendChild(renderer.domElement);
+
+            // Event listeners
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function createCircleTexture(color, size) {
+            const matCanvas = document.createElement('canvas');
+            matCanvas.width = matCanvas.height = size;
+            const matContext = matCanvas.getContext('2d');
+            const center = size / 2;
+            matContext.beginPath();
+            matContext.arc(center, center, size / 2, 0, 2 * Math.PI, false);
+            matContext.closePath();
+            matContext.fillStyle = color;
+            matContext.fill();
+            return new THREE.CanvasTexture(matCanvas);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = event.clientX - windowHalfX;
+            mouseY = event.clientY - windowHalfY;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            const time = Date.now() * 0.00005;
+            
+            camera.position.x += (mouseX - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            particleSystem.rotation.y = time * 0.5;
+            particleSystem.rotation.x = time * 0.2;
+
+            renderer.render(scene, camera);
+        }
+
+        initThree();
+        animate();
+        
+        // Smooth Scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header background on scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-white/80', 'shadow-md', 'backdrop-blur-sm');
+            } else {
+                header.classList.remove('bg-white/80', 'shadow-md', 'backdrop-blur-sm');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+    </script>
+</body>
+</html>
