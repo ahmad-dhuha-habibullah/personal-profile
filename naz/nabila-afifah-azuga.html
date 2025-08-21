@@ -17,7 +17,7 @@
             color: #5C4033; /* Dark brown for text */
         }
         #three-canvas {
-            position: fixed; /* Changed to fixed to stay in place */
+            position: fixed; /* Keep canvas fixed for immersive effect */
             top: 0;
             left: 0;
             width: 100%;
@@ -71,10 +71,10 @@
     <div class="relative min-h-screen">
 
         <!-- Header -->
-        <header class="content-section fixed top-0 left-0 right-0 z-20 transition-all duration-300" id="header">
+        <header class="content-section fixed top-0 left-0 right-0 z-20 bg-pink-100/50 backdrop-blur-lg shadow-md" id="header">
             <div class="container mx-auto px-6 py-4">
                 <nav class="flex items-center justify-between">
-                    <a href="#" class="text-2xl font-bold text-gray-800">NAZ</a>
+                    <a href="#" class="text-xl font-bold text-gray-800">Nabila Afifah Azuga</a>
                     <div class="hidden md:flex items-center space-x-8">
                         <a href="#about" class="text-gray-700 hover:text-pink-500 transition">About</a>
                         <a href="#experience" class="text-gray-700 hover:text-pink-500 transition">Experience</a>
@@ -298,118 +298,109 @@
         </div>
 
         <!-- Footer -->
-        <footer class="content-section bg-gray-800 text-white py-8">
-            <div class="container mx-auto text-center">
-                <p>&copy; 2025 Nabila Afifah Azuga. All Rights Reserved.</p>
+        <footer class="content-section bg-pink-100/50 backdrop-blur-lg text-gray-700 py-6">
+            <div class="container mx-auto text-center text-sm">
+                <p>&copy; 2025 Nabila Afifah Azuga</p>
             </div>
         </footer>
     </div>
 
     <script>
-        // --- SAKURA ANIMATION SCRIPT ---
-        let scene, camera, renderer, petals = [];
-        const petalCount = 50;
+        // --- INTERACTIVE PARTICLE SCRIPT ---
+        let scene, camera, renderer, particles, particleSystem;
+        let mouseX = 0, mouseY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
 
         function initThree() {
+            // Scene setup
             scene = new THREE.Scene();
             
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.z = 1000;
 
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x000000, 0);
-            document.getElementById('three-canvas').appendChild(renderer.domElement);
-
-            const petalTexture = createSakuraTexture();
-            const petalMaterial = new THREE.MeshBasicMaterial({ 
-                map: petalTexture, 
-                transparent: true, 
-                side: THREE.DoubleSide,
+            // Particle material
+            const particleMaterial = new THREE.PointsMaterial({
+                color: 0xFFC0CB, // Soft Pink
+                size: 3,
+                map: createCircleTexture('#FFDAB9', 256), // Peach color for particles
+                blending: THREE.AdditiveBlending,
+                transparent: true,
                 depthWrite: false
             });
-            const petalGeometry = new THREE.PlaneGeometry(0.2, 0.2);
 
-            for (let i = 0; i < petalCount; i++) {
-                const petal = new THREE.Mesh(petalGeometry, petalMaterial);
-                resetPetal(petal);
-                petals.push(petal);
-                scene.add(petal);
+            // Particle geometry
+            const particleGeometry = new THREE.BufferGeometry();
+            const particleCount = 5000;
+            const positions = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 2000;
             }
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            // Particle system
+            particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particleSystem);
 
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0); // Transparent background
+            document.getElementById('three-canvas').appendChild(renderer.domElement);
+
+            // Event listeners
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
             window.addEventListener('resize', onWindowResize, false);
         }
 
-        function createSakuraTexture() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 64;
-            canvas.height = 64;
-            const ctx = canvas.getContext('2d');
-            
-            ctx.fillStyle = 'white';
-            ctx.beginPath();
-            ctx.moveTo(32, 10);
-            ctx.bezierCurveTo(60, 20, 50, 50, 32, 60);
-            ctx.bezierCurveTo(14, 50, 4, 20, 32, 10);
-            ctx.fill();
-
-            ctx.fillStyle = 'rgba(255, 192, 203, 0.8)'; // Pink
-            ctx.beginPath();
-            ctx.moveTo(32, 15);
-            ctx.bezierCurveTo(55, 25, 45, 45, 32, 55);
-            ctx.bezierCurveTo(19, 45, 9, 25, 32, 15);
-            ctx.fill();
-            
-            return new THREE.CanvasTexture(canvas);
+        function createCircleTexture(color, size) {
+            const matCanvas = document.createElement('canvas');
+            matCanvas.width = matCanvas.height = size;
+            const matContext = matCanvas.getContext('2d');
+            const center = size / 2;
+            matContext.beginPath();
+            matContext.arc(center, center, size / 2, 0, 2 * Math.PI, false);
+            matContext.closePath();
+            matContext.fillStyle = color;
+            matContext.fill();
+            return new THREE.CanvasTexture(matCanvas);
         }
 
-        function resetPetal(petal) {
-            const scale = Math.random() * 0.5 + 0.5;
-            petal.scale.set(scale, scale, scale);
-
-            petal.position.x = (Math.random() - 0.5) * 15;
-            petal.position.y = Math.random() * 10 + 5; // Start above screen
-            petal.position.z = (Math.random() - 0.5) * 10;
-
-            petal.userData = {
-                velocityY: Math.random() * 0.01 + 0.005,
-                velocityX: (Math.random() - 0.5) * 0.01,
-                rotationX: Math.random() * 0.1,
-                rotationY: Math.random() * 0.1,
-                rotationZ: Math.random() * 0.1
-            };
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            petals.forEach(petal => {
-                petal.position.y -= petal.userData.velocityY;
-                petal.position.x += Math.sin(petal.position.y * 0.5) * petal.userData.velocityX;
-
-                petal.rotation.x += petal.userData.rotationX;
-                petal.rotation.y += petal.userData.rotationY;
-                petal.rotation.z += petal.userData.rotationZ;
-
-                if (petal.position.y < -6) {
-                    resetPetal(petal);
-                    petal.position.y = 6; // Reset to top
-                }
-            });
-
-            renderer.render(scene, camera);
-        }
-        
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
+        function onDocumentMouseMove(event) {
+            mouseX = event.clientX - windowHalfX;
+            mouseY = event.clientY - windowHalfY;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+            const time = Date.now() * 0.00005;
+            
+            camera.position.x += (mouseX - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            particleSystem.rotation.y = time * 0.5;
+            particleSystem.rotation.x = time * 0.2;
+
+            renderer.render(scene, camera);
+        }
+
         initThree();
         animate();
-        
-        // --- END SAKURA SCRIPT ---
+        // --- END INTERACTIVE PARTICLE SCRIPT ---
 
         // Smooth Scrolling for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -419,16 +410,6 @@
                     behavior: 'smooth'
                 });
             });
-        });
-
-        // Header background on scroll
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('bg-white/80', 'shadow-md', 'backdrop-blur-sm');
-            } else {
-                header.classList.remove('bg-white/80', 'shadow-md', 'backdrop-blur-sm');
-            }
         });
         
         // Mobile menu toggle
