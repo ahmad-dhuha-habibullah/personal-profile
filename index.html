@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmad Dhuha Habibullah</title>
-    <link rel="icon" href="https://lh3.googleusercontent.com/ogw/AF2bZyjjdFlUD8SRX1gVnZDm1QwbseKeKuZQ9E7WCAIkWSFQxMfB=s64-c-mo" type="image/png">
+    <link rel="icon" href="./assets/ahmad-dhuha-habibullah.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +18,7 @@
             --slate-mid: #94a3b8;
             --slate-dark: #334155;
             --sky-accent: #38bdf8;
-            --glass-bg: rgba(15, 23, 42, 0.65); /* Slightly increased opacity for readability */
+            --glass-bg: rgba(15, 23, 42, 0.65);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -31,7 +29,7 @@
         #bg-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
-        /* Glassmorphism card style with enhanced blur */
+        /* Glassmorphism card style */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -46,26 +44,18 @@
             background-color: var(--sky-accent);
             border-radius: 2px;
         }
-        /* Prose styles for formatting rich text content from a CMS */
-        .prose { --tw-prose-body: #d1d5db; --tw-prose-headings: #fff; --tw-prose-links: #fff; --tw-prose-bold: #fff; --tw-prose-bullets: #6b7280; --tw-prose-hr: #4b5563; --tw-prose-quotes: #f3f4f6; --tw-prose-quote-borders: var(--sky-accent); }
-        
         /* Timeline styles for experience section */
         .timeline-item::before {
-            content: ''; position: absolute; left: -0.3125rem; /* Adjusted for centering on the line */
+            content: ''; position: absolute; left: -0.3125rem;
             top: 0.5rem; width: 1rem; height: 1rem;
             border-radius: 50%; background-color: var(--sky-accent); border: 3px solid var(--dark-bg); z-index: 1;
         }
-        /* Loading spinner animation */
-        .loader {
-            width: 2rem; height: 2rem;
-            border: 3px solid var(--slate-dark);
-            border-bottom-color: var(--sky-accent);
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
+        /* Custom styles for filter inputs */
+        .filter-input {
+            background-color: var(--slate-dark);
+            border: 1px solid var(--slate-mid);
+            color: var(--slate-light);
         }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="antialiased">
@@ -76,18 +66,18 @@
         <!-- Header and Navigation -->
         <header class="bg-slate-900/50 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-slate-800">
             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <a href="#" id="nav-home" class="block cursor-pointer">
-                    <img src="https://oygwmoiapzllryxeumoj.supabase.co/storage/v1/object/public/portfolio-assets/ADH.png" alt="ADH Logo" class="h-8 w-auto hover:opacity-80 transition-opacity">
+                <a href="#" class="block cursor-pointer">
+                    <span class="text-xl font-bold text-white">ADH</span>
                 </a>
                 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#experience" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Experience</a>
                     <a href="#education" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Education</a>
-                    <a href="#projects" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Projects</a>
+                    <a href="#publications" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Publications</a>
                     <a href="#skills" class="px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Skills</a>
                 </div>
-                <a id="cv-download-link-desktop" href="#" class="hidden md:block bg-sky-500 text-white px-5 py-2 rounded-full font-semibold text-sm hover:bg-sky-600 transition-all duration-300 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40">
+                <a href="./assets/cv_ahmad_dhuha_habibullah.pdf" target="_blank" class="hidden md:block bg-sky-500 text-white px-5 py-2 rounded-full font-semibold text-sm hover:bg-sky-600 transition-all duration-300 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40">
                     Download CV
                 </a>
 
@@ -104,9 +94,9 @@
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <a href="#experience" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Experience</a>
                     <a href="#education" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Education</a>
-                    <a href="#projects" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Projects</a>
+                    <a href="#publications" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Publications</a>
                     <a href="#skills" class="block px-3 py-2 text-slate-300 hover:text-white font-medium transition-colors duration-300 rounded-md cursor-pointer">Skills</a>
-                    <a id="cv-download-link-mobile" href="#" class="block w-full text-left mt-2 bg-sky-500 text-white px-4 py-2 rounded-md font-semibold text-sm hover:bg-sky-600 transition-all">
+                    <a href="./assets/cv_ahmad_dhuha_habibullah.pdf" target="_blank" class="block w-full text-left mt-2 bg-sky-500 text-white px-4 py-2 rounded-md font-semibold text-sm hover:bg-sky-600 transition-all">
                         Download CV
                     </a>
                 </div>
@@ -114,284 +104,249 @@
         </header>
 
         <main id="main-content">
-            <!-- Loading State -->
-            <div id="loading-state" class="min-h-screen flex justify-center items-center">
-                <div class="loader"></div>
-            </div>
-
-            <!-- HomePage Content -->
-            <div id="home-page" class="hidden">
-                <!-- Hero Section -->
-                <section id="hero" class="text-center pt-32 sm:pt-40 pb-8 md:pb-12">
-                    <div class="container mx-auto px-6">
-                        <img src="https://oygwmoiapzllryxeumoj.supabase.co/storage/v1/object/public/portfolio-assets/Ahmad%20Dhuha%20Habibullah.png" alt="Ahmad Dhuha Habibullah" class="w-32 h-32 rounded-full mx-auto mb-6 shadow-xl border-4 border-slate-800 bg-slate-700">
-                        <h1 class="text-4xl md:text-5xl font-bold text-white">Ahmad Dhuha Habibullah</h1>
-                        <p class="mt-3 text-xl md:text-2xl text-sky-400 font-medium">Physical Oceanographer - Data Analyst - IoT Enthusiast</p>
-                        <p class="mt-6 max-w-3xl mx-auto text-slate-300">
-                           Marine scientist and data analyst with over 5 years of experience in ocean-atmosphere interactions, marine heatwave analysis, and environmental monitoring. Proficient in MATLAB, Python, R, and Arduino, I excel in processing large datasets and developing IoT-based solutions.
-                        </p>
-                    </div>
-                </section>
-                
-                <!-- Experience Section -->
-                <section id="experience" class="py-12 md:py-16 scroll-mt-20">
-                    <div class="container mx-auto px-6">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Professional Experience</h2>
-                        <div class="max-w-3xl mx-auto relative border-l-2 border-slate-800/50 pl-8">
-                            <div class="space-y-12">
-                                <div class="timeline-item"><h3 class="text-xl font-bold text-white">Marine-Meteorological Specialist</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (Mid 2024 - Present)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Install and maintain marine meteorological systems.</li><li>Produce daily marine weather forecasts for clients, utilizing radar data.</li><li>Monitor real-time environmental data, enhancing weather models.</li></ul></div>
-                                <div class="timeline-item"><h3 class="text-xl font-bold text-white">Project Management Officer</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (Mid 2023 - Mid 2024)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Optimized project schedules for Marine Automatic Weather Station deployments.</li><li>Coordinated installation processes, facilitating seamless collaboration.</li></ul></div>
-                                <div class="timeline-item"><h3 class="text-xl font-bold text-white">System Integration Officer</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (2022 - Mid 2023)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Conducted site surveys to determine optimal locations for AWS installations.</li><li>Collaborated with clients on site selection and coordinated with suppliers.</li></ul></div>
-                            </div>
+            <!-- Hero Section -->
+            <section id="hero" class="text-center pt-32 sm:pt-40 pb-8 md:pb-12">
+                <div class="container mx-auto px-6">
+                    <img src="./assets/ahmad-dhuha-habibullah.png" alt="Ahmad Dhuha Habibullah" class="w-32 h-32 rounded-full mx-auto mb-6 shadow-xl border-4 border-slate-800 bg-slate-700" onerror="this.onerror=null;this.src='https://placehold.co/128x128/1e293b/e2e8f0?text=ADH';">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white">Ahmad Dhuha Habibullah</h1>
+                    <p class="mt-3 text-xl md:text-2xl text-sky-400 font-medium">Physical Oceanographer | Data Analyst | IoT Enthusiast</p>
+                    <p class="mt-6 max-w-3xl mx-auto text-slate-300">
+                       A marine scientist and data analyst with expertise in ocean-atmosphere dynamics, marine heatwave analysis, and environmental monitoring. Skilled in processing large datasets and developing IoT-based monitoring solutions.
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Experience Section -->
+            <section id="experience" class="py-12 md:py-16 scroll-mt-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Professional Experience</h2>
+                    <div class="max-w-3xl mx-auto relative border-l-2 border-slate-800/50 pl-8">
+                        <div class="space-y-12">
+                            <div class="timeline-item"><h3 class="text-xl font-bold text-white">Marine-Meteorological Specialist</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (July 2024 - Present)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Install, operate, and maintain marine meteorological systems.</li><li>Produce and distribute daily marine weather forecasts for clients, integrating radar data for enhanced accuracy.</li><li>Monitor real-time environmental data to refine and improve weather forecasting models.</li></ul></div>
+                            <div class="timeline-item"><h3 class="text-xl font-bold text-white">Project Management Officer</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (July 2023 - July 2024)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Developed and optimized project schedules for Marine Automatic Weather Station (AWS) deployments.</li><li>Coordinated installation processes, ensuring seamless collaboration between technical teams and clients.</li></ul></div>
+                            <div class="timeline-item"><h3 class="text-xl font-bold text-white">System Integration Officer</h3><p class="font-medium text-slate-300">PT SIBACIPTA TELEKOMINDO (September 2022 - July 2023)</p><ul class="list-disc list-inside text-sm text-slate-300 mt-2 space-y-1"><li>Conducted comprehensive site surveys to identify optimal locations for AWS installations.</li><li>Collaborated with clients on site selection and coordinated with suppliers for equipment procurement.</li></ul></div>
                         </div>
                     </div>
-                </section>
-                
-                <!-- Education Section -->
-                <section id="education" class="py-12 md:py-16 scroll-mt-20">
-                    <div class="container mx-auto px-6">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Education</h2>
-                        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                            <div class="glass-card rounded-xl p-6 hover:shadow-lg hover:shadow-sky-500/10"><h3 class="text-xl font-bold text-white">Master of Science in Earth Science</h3><p class="font-medium text-slate-300 mt-1">Institut Teknologi Bandung (2020 - 2022)</p><p class="mt-3 text-slate-300 text-sm">Thesis: "Analyzing Marine Heatwaves in Indonesia (1982-2020)"</p></div>
-                            <div class="glass-card rounded-xl p-6 hover:shadow-lg hover:shadow-sky-500/10"><h3 class="text-xl font-bold text-white">Bachelor of Science in Physics</h3><p class="font-medium text-slate-300 mt-1">Universitas Bengkulu (2015 - 2019)</p><p class="mt-3 text-slate-300 text-sm">Thesis: "Development of a Microcontroller-Based Solar Irradiance Monitoring Instrument"</p></div>
+                </div>
+            </section>
+            
+            <!-- Education Section -->
+            <section id="education" class="py-12 md:py-16 scroll-mt-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Education</h2>
+                    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <div class="glass-card rounded-xl p-6 hover:shadow-lg hover:shadow-sky-500/10"><h3 class="text-xl font-bold text-white">Master of Science in Earth Science</h3><p class="font-medium text-slate-300 mt-1">Institut Teknologi Bandung (2020 - 2022)</p><p class="mt-3 text-slate-300 text-sm">Thesis: "Analyzing Marine Heatwaves in Indonesia (1982-2020)"</p></div>
+                        <div class="glass-card rounded-xl p-6 hover:shadow-lg hover:shadow-sky-500/10"><h3 class="text-xl font-bold text-white">Bachelor of Science in Physics</h3><p class="font-medium text-slate-300 mt-1">Universitas Bengkulu (2015 - 2019)</p><p class="mt-3 text-slate-300 text-sm">Thesis: "Development of a Microcontroller-Based Solar Irradiance Monitoring Instrument"</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications Section -->
+            <section id="publications" class="py-12 md:py-16 scroll-mt-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center relative section-title-underline">Publications</h2>
+                    
+                    <div class="max-w-4xl mx-auto">
+                        <!-- Filter and Sort Controls -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <input type="text" id="search-input" placeholder="Search publications..." class="filter-input w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-sky-500 focus:outline-none transition">
+                            <select id="sort-select" class="filter-input w-full sm:w-48 px-4 py-2 rounded-md focus:ring-2 focus:ring-sky-500 focus:outline-none transition">
+                                <option value="year-desc">Year (Newest)</option>
+                                <option value="year-asc">Year (Oldest)</option>
+                                <option value="title-asc">Title (A-Z)</option>
+                            </select>
+                        </div>
+
+                        <!-- Publication List Container -->
+                        <div id="publications-list" class="space-y-6">
+                            <!-- JS will populate this -->
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <!-- Projects Section -->
-                <section id="projects" class="py-12 md:py-16 scroll-mt-20">
-                    <div class="container mx-auto px-6">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Projects & Publications</h2>
-                        <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                            <!-- Projects from Supabase will be injected here -->
+            <!-- Skills Section -->
+            <section id="skills" class="py-12 md:py-16 scroll-mt-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Core Competencies</h2>
+                    <div id="skills-container" class="max-w-4xl mx-auto">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                            <div class="text-center"><h3 class="text-lg font-bold text-sky-400 mb-3">Data Analysis & Programming</h3><div class="flex flex-wrap gap-2 justify-center"><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">MATLAB</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">Python</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">SQL</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">GrADS</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">Ocean Data View</span></div></div>
+                            <div class="text-center"><h3 class="text-lg font-bold text-sky-400 mb-3">IoT & Hardware</h3><div class="flex flex-wrap gap-2 justify-center"><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">Arduino</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">ESP32</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">Raspberry Pi</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">Sensor Integration</span></div></div>
+                            <div class="text-center"><h3 class="text-lg font-bold text-sky-400 mb-3">Tools & Software</h3><div class="flex flex-wrap gap-2 justify-center"><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">Microsoft Office Suite</span><span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">Google Workspace</span></div></div>
                         </div>
                     </div>
-                </section>
-
-                <!-- Training Section -->
-                <section id="training" class="py-12 md:py-16 scroll-mt-20">
-                    <div class="container mx-auto px-6">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Professional Training</h2>
-                        <div id="training-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                             <!-- Training from Supabase will be injected here -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Skills Section -->
-                <section id="skills" class="py-12 md:py-16 scroll-mt-20">
-                    <div class="container mx-auto px-6">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center relative section-title-underline">Core Competencies</h2>
-                        <div id="skills-container" class="max-w-4xl mx-auto">
-                            <!-- Skills from Supabase will be injected here -->
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- PostPage Content -->
-            <div id="post-page" class="hidden">
-                <section class="py-32">
-                    <div class="container mx-auto px-6 max-w-4xl">
-                        <button id="back-to-home-btn" class="text-sky-400 mb-8 inline-flex items-center group">
-                            <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                            Back to Overview
-                        </button>
-                        <div id="post-content-container" class="glass-card rounded-xl p-8 md:p-12"></div>
-                    </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </main>
 
         <footer class="bg-slate-900/50 border-t border-slate-800 mt-12">
             <div class="container mx-auto px-6 py-12 text-center">
                 <h2 class="text-3xl font-bold text-white">Get In Touch</h2>
-                <p class="mt-4 max-w-2xl mx-auto text-slate-300">I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious vision. Feel free to reach out.</p>
+                <p class="mt-4 max-w-2xl mx-auto text-slate-300">I'm always open to discussing new projects, creative ideas, or opportunities. Feel free to reach out.</p>
                 <div class="mt-8">
                      <a href="mailto:Habibullahphys15@gmail.com" class="bg-sky-500 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-sky-600 transition-all duration-300 shadow-lg">
                         Contact Me
                     </a>
                 </div>
-                <p class="mt-10 text-sm text-slate-400">&copy; 2025 Ahmad Dhuha Habibullah. Powered by Curiosity.</p>
+                 <div class="mt-8 flex justify-center space-x-6 text-slate-400">
+                    <a href="https://www.linkedin.com/in/ahmad-dhuha-habibullah" target="_blank" class="hover:text-sky-400 transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                    </a>
+                    <a href="https://github.com/ahmad-dhuha-habibullah" target="_blank" class="hover:text-sky-400 transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.942.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.578.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                    </a>
+                </div>
+                <p class="mt-10 text-sm text-slate-400">&copy; 2025 Ahmad Dhuha Habibullah. All rights reserved.</p>
             </div>
         </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // --- CONFIGURATION ---
-            const SUPABASE_URL = 'https://oygwmoiapzllryxeumoj.supabase.co'; 
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Z3dtb2lhcHpsbHJ5eGV1bW9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ3NTYzNjQsImV4cCI6MjA3MDMzMjM2NH0.p6C3jSzXg3889QfyGFFrdhUn0TLIfJmWevOg5k_2ZZ8';
-
-            // --- GLOBAL STATE ---
-            let posts = [];
-            let chartInstance = null;
-            let supabaseClient = null;
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- PUBLICATION DATA ---
+            const publicationsData = [
+                {
+                    title: "Marine heatwaves in the Indonesian fisheries management areas",
+                    authors: "<b>AD Habibullah</b>, A Tarya, NS Ningsih, MR Putri",
+                    source: "Journal of Marine Science and Engineering 11 (1), 161",
+                    year: 2023,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:2osOgNQ5qMEC"
+                },
+                {
+                    title: "Sea surface temperature variability in Indonesia and its relation to regional climate indices",
+                    authors: "<b>AD Habibullah</b>, A Tarya",
+                    source: "IOP Conference Series Earth and Environmental Science",
+                    year: 2021,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:qjMakFHDy7sC"
+                },
+                {
+                    title: "Impact of marine heatwaves and cold spells on coral reef ecosystem in a tropical region: a case study of Lombok Waters, Indonesia",
+                    authors: "G Napitupulu, A Nagi, S Nurdjaman, IM Radjawane, R Rachmayani, <b>AD Habibullah</b>, ...",
+                    source: "Marine Systems & Ocean Technology 20 (1), 16",
+                    year: 2025,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:d1gkVwhDpl0C"
+                },
+                {
+                    title: "Effect of marine heat waves for coral bleaching in Lombok Waters",
+                    authors: "A Nagi, S Nurdjaman, IM Radjawanne, G Napitupulu, <b>AD Habibullah</b>, ...",
+                    source: "IOP Conference Series: Earth and Environmental Science 1350 (1), 012037",
+                    year: 2024,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:IjCSPb-OGe4C"
+                },
+                {
+                    title: "A simple and inexpensive irradiance monitoring system using photovoltaic panel",
+                    authors: "<b>AD Habibullah</b>, L Lidiawati, R Ekawita",
+                    source: "AIP Conference Proceedings 2320 (1), 050034",
+                    year: 2021,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:u-x6o8ySG0sC"
+                },
+                {
+                    title: "Variabilitas Bulanan Thermal front di Wilayah Pengelolaan Perikanan Republik Indonesia 714 (Laut Banda)",
+                    authors: "AA Lukman, G Napitupulu, A Tarya, W Pranowo, RB Hatmaja, <b>AD Habibullah</b>, ...",
+                    source: "JURNAL GEOLOGI KELAUTAN 23 (1)",
+                    year: 2025,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:zYLM7Y9cAGgC"
+                },
+                {
+                    title: "LEVERAGING THE UBIQUITOUS GPS SENSOR ON THE SMARTPHONES FOR ACCESSIBLE LAND SURVEYING",
+                    authors: "<b>AD Habibullah</b>, E Yuliza, IF Almadi, YI Intara, R Ekawita",
+                    source: "Indonesian Physical Review 8 (2), 366-376",
+                    year: 2025,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:UeHWp8X0CEIC"
+                },
+                {
+                    title: "INTERANNUAL VARIABILITY OF SEA LEVEL ANOMALY (SLA) IN THE WESTERN SUMATRA COASTAL WATERS DRIVEN BY ENSO AND IOD MODULATIONS",
+                    authors: "NA Azuga, <b>AD Habibullah</b>",
+                    source: "Asian Journal of Aquatic Sciences 7 (3), 422-431",
+                    year: 2024,
+                    url: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IYfsySoAAAAJ&citation_for_view=IYfsySoAAAAJ:9yKSN-GCB0IC"
+                }
+            ];
 
             // --- DOM ELEMENTS ---
-            const loadingState = document.getElementById('loading-state');
-            const pages = { home: document.getElementById('home-page'), post: document.getElementById('post-page') };
-            const projectsGrid = document.getElementById('projects-grid');
-            const trainingGrid = document.getElementById('training-grid');
-            const skillsContainer = document.getElementById('skills-container');
-            const postContentContainer = document.getElementById('post-content-container');
-            const cvDownloadLinkDesktop = document.getElementById('cv-download-link-desktop');
-            const cvDownloadLinkMobile = document.getElementById('cv-download-link-mobile');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const navHomeButton = document.getElementById('nav-home');
+            const searchInput = document.getElementById('search-input');
+            const sortSelect = document.getElementById('sort-select');
+            const publicationsList = document.getElementById('publications-list');
+
+            // --- FUNCTIONS ---
+            function renderPublications(pubs) {
+                publicationsList.innerHTML = '';
+                if (pubs.length === 0) {
+                    publicationsList.innerHTML = '<p class="text-slate-400 text-center">No publications found.</p>';
+                    return;
+                }
+                pubs.forEach(pub => {
+                    const pubElement = document.createElement('div');
+                    pubElement.className = 'border-b border-slate-800 pb-4';
+                    pubElement.innerHTML = `
+                        <a href="${pub.url}" target="_blank" class="text-lg text-sky-400 hover:underline">${pub.title}</a>
+                        <p class="text-sm text-slate-300 mt-1">${pub.authors}</p>
+                        <p class="text-sm text-slate-400">${pub.source}, ${pub.year}</p>
+                    `;
+                    publicationsList.appendChild(pubElement);
+                });
+            }
+
+            function updateList() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const sortBy = sortSelect.value;
+
+                let filteredPubs = publicationsData.filter(pub => 
+                    pub.title.toLowerCase().includes(searchTerm) ||
+                    pub.authors.toLowerCase().includes(searchTerm) ||
+                    pub.source.toLowerCase().includes(searchTerm)
+                );
+
+                if (sortBy === 'year-desc') {
+                    filteredPubs.sort((a, b) => b.year - a.year);
+                } else if (sortBy === 'year-asc') {
+                    filteredPubs.sort((a, b) => a.year - b.year);
+                } else if (sortBy === 'title-asc') {
+                    filteredPubs.sort((a, b) => a.title.localeCompare(b.title));
+                }
+
+                renderPublications(filteredPubs);
+            }
             
+            // --- EVENT LISTENERS ---
+            searchInput.addEventListener('input', updateList);
+            sortSelect.addEventListener('change', updateList);
+
+
+            // --- INITIAL RENDER ---
+            updateList();
+
             // --- MOBILE MENU TOGGLE ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
             
-            // Close mobile menu when a link is clicked
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
+            document.querySelectorAll('#mobile-menu a, nav a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        mobileMenu.classList.add('hidden');
+                    }
                 });
             });
 
-            // --- API & DATA HANDLING ---
-            function initializeSupabase() {
-                if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-                    document.getElementById('main-content').innerHTML = `<div class="min-h-screen flex flex-col justify-center items-center text-center"><h2 class="text-2xl text-yellow-500 font-bold">Ooppss</h2><p class="text-slate-300 mt-2">Please paste your Supabase URL and Anon Key into the script variables.</p></div>`;
-                    return null;
-                }
-                return supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
 
-            async function fetchData(tableName, query = '*') {
-                if (!supabaseClient) return [];
-                try {
-                    const { data, error } = await supabaseClient.from(tableName).select(query);
-                    if (error) throw error;
-                    return data;
-                } catch (error) {
-                    console.error(`Failed to fetch from ${tableName}:`, error);
-                    return [];
-                }
-            }
-            
-             function getCVUrl() {
-                if (!supabaseClient) return '#';
-                const { data } = supabaseClient
-                    .storage
-                    .from('portfolio-assets')
-                    .getPublicUrl('CV_Ahmad_Dhuha_Habibullah_2025.pdf');
-                return data.publicUrl;
-            }
-
-            // --- NAVIGATION ---
-            function showPage(pageName) {
-                if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
-                Object.values(pages).forEach(page => page.classList.add('hidden'));
-                if (pages[pageName]) pages[pageName].classList.remove('hidden');
-                window.scrollTo(0, 0);
-            }
-
-            function showPost(postId) {
-                const post = posts.find(p => p.id == postId);
-                if (!post) { return; }
-                
-                postContentContainer.innerHTML = `<p class="text-md text-sky-400 font-medium mb-2">${post.category || 'Project'}</p><h1 class="text-4xl md:text-5xl font-bold text-white">${post.title || 'Untitled Post'}</h1><p class="text-lg text-slate-300 mt-2">${post.subtitle || ''}</p><img src="${post.imageUrl}" alt="${post.title || 'Untitled'}" class="my-8 rounded-lg w-full object-cover" onerror="this.style.display='none'"><div class="prose prose-invert prose-lg max-w-none text-slate-300">${post.content}</div>`;
-                showPage('post');
-
-                if (post.id == 1) { 
-                    setTimeout(renderCoralChart, 0);
-                }
-            }
-
-            // --- EVENT LISTENERS ---
-            navHomeButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                showPage('home');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-            document.getElementById('back-to-home-btn').addEventListener('click', () => showPage('home'));
-
-            ['experience', 'education', 'projects', 'skills'].forEach(id => {
-                document.querySelectorAll(`a[href="#${id}"]`).forEach(link => {
-                     link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        showPage('home');
-                        setTimeout(() => { 
-                            const element = document.getElementById(id);
-                            if (element) {
-                                element.scrollIntoView({ behavior: 'smooth' });
-                            }
-                        }, 100);
-                    });
+             // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
-            
-            // --- DYNAMIC CONTENT POPULATION ---
-            function populateProjects(postsData) {
-                projectsGrid.innerHTML = '';
-                postsData.forEach(post => {
-                    const card = document.createElement('div');
-                    card.className = 'glass-card rounded-xl p-6 cursor-pointer hover:-translate-y-1 transition-transform hover:shadow-lg hover:shadow-sky-500/10 min-h-[200px] flex flex-col';
-                    card.innerHTML = `<div class="flex-grow"><h3 class="font-bold text-white text-lg">${post.title || 'Untitled Post'}</h3><p class="text-sm text-sky-400 mt-1">${post.subtitle || ''}</p><p class="mt-3 text-slate-300 text-sm">${post.summary || ''}</p></div><div class="mt-4 text-right text-xs text-sky-400/80">Read More &rarr;</div>`;
-                    card.addEventListener('click', () => showPost(post.id));
-                    projectsGrid.appendChild(card);
-                });
-            }
-
-            function populateTrainings(trainings) {
-                trainingGrid.innerHTML = '';
-                trainings.forEach(training => {
-                    const card = document.createElement('div');
-                    card.className = 'glass-card rounded-xl p-6 text-center hover:shadow-lg hover:shadow-sky-500/10 min-h-[200px]';
-                    card.innerHTML = `<h3 class="font-bold text-white">${training.title}</h3><p class="text-sm text-slate-300 mt-1">${training.organization} (${training.year})</p><p class="mt-3 text-slate-300 text-sm">${training.description}</p>`;
-                    trainingGrid.appendChild(card);
-                });
-            }
-
-            function populateSkills(skills) {
-                const categories = [...new Set(skills.map(s => s.category))].sort();
-                let html = '<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">';
-                categories.forEach(category => {
-                    html += `<div class="text-center"><h3 class="text-lg font-bold text-sky-400 mb-3">${category}</h3><div class="flex flex-wrap gap-2 justify-center">`;
-                    skills.filter(s => s.category === category).forEach(skill => {
-                        html += `<span class="bg-slate-800 text-slate-300 font-medium py-1 px-3 rounded-full text-sm">${skill.name}</span>`;
-                    });
-                    html += `</div></div>`;
-                });
-                html += '</div>';
-                skillsContainer.innerHTML = html;
-            }
-
-            // --- INITIALIZATION ---
-            async function initializeApp() {
-                supabaseClient = initializeSupabase();
-                if (!supabaseClient) return;
-
-                const [fetchedPosts, fetchedTrainings, fetchedSkills] = await Promise.all([
-                    fetchData('posts', '*, posts_tags(tags(name))'),
-                    fetchData('trainings'),
-                    fetchData('skills')
-                ]);
-                
-                posts = fetchedPosts.map(post => ({
-                    ...post,
-                    tags: post.posts_tags.map(pt => pt.tags.name)
-                }));
-                
-                const cvUrl = getCVUrl();
-                cvDownloadLinkDesktop.href = cvUrl;
-                cvDownloadLinkMobile.href = cvUrl;
-
-                loadingState.classList.add('hidden'); 
-                
-                populateProjects(posts);
-                populateTrainings(fetchedTrainings);
-                populateSkills(fetchedSkills);
-
-                showPage('home');
-            }
-
-            initializeApp();
         });
 
         // --- Three.js Starry Night Background ---
@@ -407,39 +362,26 @@
             renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bg-canvas"), alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
 
-            // Create multiple groups of stars for a parallax effect
             const starParams = [
-                { count: 2000, color: 0x555555, size: 0.5, z: -1000 }, // Farthest
-                { count: 1500, color: 0x888888, size: 0.7, z: -500 }, // Mid
-                { count: 1000, color: 0xffffff, size: 0.8, z: -100 }  // Nearest
+                { count: 2000, color: 0x555555, size: 0.5, z: -1000 },
+                { count: 1500, color: 0x888888, size: 0.7, z: -500 },
+                { count: 1000, color: 0xffffff, size: 0.8, z: -100 }
             ];
 
             starParams.forEach(params => {
                 const geometry = new THREE.BufferGeometry();
                 const vertices = [];
                 for (let i = 0; i < params.count; i++) {
-                    const x = (Math.random() - 0.5) * 2000;
-                    const y = (Math.random() - 0.5) * 2000;
-                    const z = (Math.random() - 0.5) * 2000;
-                    vertices.push(x, y, z);
+                    vertices.push((Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000, (Math.random() - 0.5) * 2000);
                 }
                 geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-
-                const material = new THREE.PointsMaterial({
-                    color: params.color,
-                    size: params.size,
-                    sizeAttenuation: true,
-                    transparent: true,
-                    opacity: 0.8
-                });
-
+                const material = new THREE.PointsMaterial({ color: params.color, size: params.size, sizeAttenuation: true, transparent: true, opacity: 0.8 });
                 const stars = new THREE.Points(geometry, material);
                 stars.position.z = params.z;
                 starGroups.push(stars);
                 scene.add(stars);
             });
 
-            // Event Listeners
             window.addEventListener('resize', onWindowResize, false);
             document.addEventListener('mousemove', onDocumentMouseMove, false);
         }
@@ -457,22 +399,13 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            render();
-        }
-
-        function render() {
             const time = Date.now() * 0.00005;
-
-            // Smooth camera pan based on mouse position
             camera.position.x += (mouseX * 0.001 - camera.position.x) * 0.02;
             camera.position.y += (-mouseY * 0.001 - camera.position.y) * 0.02;
             camera.lookAt(scene.position);
-
-            // Animate star groups at different speeds for parallax
-            starGroups[0].rotation.y = time * 0.1; // Farthest stars move slowest
+            starGroups[0].rotation.y = time * 0.1;
             starGroups[1].rotation.y = time * 0.2;
-            starGroups[2].rotation.y = time * 0.3; // Nearest stars move fastest
-
+            starGroups[2].rotation.y = time * 0.3;
             renderer.render(scene, camera);
         }
 
@@ -481,6 +414,4 @@
     </script>
 </body>
 </html>
-
-
 
